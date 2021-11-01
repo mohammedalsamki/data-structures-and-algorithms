@@ -2,7 +2,7 @@
 
 See [setup instructions](https://codefellows.github.io/setup-guide/code-301/3-code-challenges), in the Code 301 Setup Guide.
 
-see [Pythone redeme](https://github.com/mohammedalsamki/data-structures-and-algorithms/blob/main/python/README.md),
+see [Pythone code chalenge ](https://github.com/mohammedalsamki/data-structures-and-algorithms/tree/main/python/code_challenges),
 
 ## Repository Quick Tour and Usage
 
