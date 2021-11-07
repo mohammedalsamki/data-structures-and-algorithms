@@ -1,1 +1,1 @@
-![array-binary-search](class03.PNG)
+![array-binary-search](cc04.jpg)
