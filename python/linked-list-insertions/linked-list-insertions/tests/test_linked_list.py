@@ -102,3 +102,48 @@ def linkedlist():
     link_list.insert_at_begining(70)
     link_list.insert_at_begining('hi')
     return link_list
+
+
+# Where k is greater than the length of the linked list
+def test_k_greater_than__the_length(linkedlist):
+    length=2
+    expected = 'you enter a number biggest than length of the liked-list'
+    actual = linkedlist.kFromEnd(5)
+    assert expected == actual
+
+# Where k and the length of the list are the same
+def test_k_same_with_the_length(linkedlist):
+    lenght=2
+    expected = f'you have to enter a number between 0 and 3'
+    actual = linkedlist.kFromEnd(3)
+    assert expected == actual
+
+# Where k is not a positive integer
+def test_k_is_the_negative(linkedlist):
+    lenght=3
+    expected = 'you entered a negative index'
+    actual = linkedlist.kFromEnd(-1)
+    assert expected == actual
+
+# Where the linked list is of a size 1
+def test_list_of_the_one_node():
+    test=Linked_list()
+    test.append(7)
+    expected = 7
+    actual = test.kFromEnd(0)
+    assert expected == actual
+
+# “Happy Path” where k is not at the end, but somewhere in the middle of the linked list
+def test_kth_the_index(linkedlist):
+    lenght=3
+    expected = 70
+    actual = linkedlist.kFromEnd(1)
+    assert expected == actual
+
+@pytest.fixture
+def linkedlist():
+    test = Linked_list()
+    test.insert_at_begining(50)
+    test.insert_at_begining(70)
+    test.insert_at_begining('hi')
+    return test
