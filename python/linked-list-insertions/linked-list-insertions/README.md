@@ -5,7 +5,10 @@ challenge has to build 3 methods:
 3. insert after: to insert node after specific node
 
 ## Whiteboard Process
+### code 06
 ![Whiteboard](./Untitled.jpg)
+### code 07
+![Whiteboard](./code07.png)
 
 
 

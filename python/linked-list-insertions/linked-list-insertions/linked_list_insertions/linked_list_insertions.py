@@ -10,6 +10,32 @@ class Linked_list():
     def __init__(self):
         self.head=None
 
+
+    def kFromEnd(self,k):
+        """
+        """
+        count = 0
+        current =self.head
+        while current:
+            current = current.next
+            count = count + 1
+        k+=1
+        if count==1:
+            return self.head.value
+        else:
+            while k>0 and k<count:
+                if count>= k :
+                    current = self.head
+                    for i in range(count - k ):
+                        current =current.next
+                    return current.value
+            if k<=0:
+                return 'you entered a negative index'
+            if k-1 == count:
+                return f'you have to enter a number between 0 and {count}'
+            if k>count:
+                return 'you enter a number biggest than length of the liked-list'
+
     def append(self,value):
 
         node =Node(value)
@@ -105,6 +131,8 @@ if __name__=="__main__":
 
     test.insert_after(300,500)
     test.insert_after(10,120)
+
+    print(test.kFromEnd(3))
 
     print(test)
 
