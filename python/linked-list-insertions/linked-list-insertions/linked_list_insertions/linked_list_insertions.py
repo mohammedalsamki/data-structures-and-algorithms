@@ -103,6 +103,23 @@ class Linked_list():
             if current.next==None:
                 current.next=newNode
 
+    def zipLists(self, list1, list2):
+        current1 = list1.head
+        current2 = list2.head
+
+        while current1 != None and current2 != None:
+
+            save_curr1_next = current1.next
+            save_curr2_next = current2.next
+
+
+            current1.next = current2
+            current2.next= save_curr1_next
+
+
+            current1 = save_curr1_next
+            current2 = save_curr2_next
+
 
     def __str__(self):
 
@@ -120,6 +137,7 @@ class Linked_list():
 if __name__=="__main__":
 
     test =Linked_list()
+    test2=Linked_list()
 
     test.insert_at_begining(300)
     test.insert_at_begining(50)
@@ -133,9 +151,14 @@ if __name__=="__main__":
     test.insert_after(10,120)
 
     print(test.kFromEnd(3))
+    print("========================")
 
     print(test)
+    print("========================")
 
+    print(test2)
+
+    test.zipLists(test,test2)
 
 
 
