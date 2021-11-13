@@ -3,3 +3,6 @@ import pytest
 def test_push(stack):
     actual=stack.top.value
     excepted="34"
+    assert excepted==actual
+
+
