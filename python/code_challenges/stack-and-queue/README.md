@@ -8,3 +8,7 @@
 ![cod11](AKGORETHM.PNG)
 ![cod11](problim.PNG)
 
+## code challenge 12
+
+![cod11](cc12.PNG)
+
