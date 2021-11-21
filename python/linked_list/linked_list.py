@@ -17,7 +17,7 @@ class Linjedlist:
         self.head=None
 
 
-    def insrt(self,value):
+    def insert(self,value):
         """
         Insert creates a Node with the value that was passed and adds
         it to the head of the linked list shifting all other values down
@@ -48,13 +48,45 @@ class Linjedlist:
             return strin
 
 
-samki = Linjedlist()
-samki.insrt(2)
 
-samki.insrt(5)
-samki.insrt(8)
-print(samki.to_string())
-print(samki)
-print("for 2 ",samki.icludes(2))
-print("for 5 ",samki.icludes(5))
-print("for 7 ",samki.icludes(8))
+def reverseList(list):
+  # initialize variables
+  previous = None         # `previous` initially points to None
+  current = list.head     # `current` points at the first element
+  following = current.next    # `following` points at the second element
+
+  # go till the last element of the list
+  while current:
+      current.next = previous # reverse the link
+      previous = current      # move `previous` one step ahead
+      current = following         # move `current` one step ahead
+      if following:               # if this was not the last element
+          following = following.next    # move `following` one step ahead
+
+  list.head = previous
+
+
+# Testing
+LL = Linjedlist()
+LL.insert(1)
+LL.insert(2)
+LL.insert(3)
+LL.insert(4)
+print("Linked List")
+# LL.print()
+print("Reversed Linked List")
+reverseList(LL)
+# LL.printLL()
+
+
+
+# samki = Linjedlist()
+# samki.insrt(2)
+
+# samki.insrt(5)
+# samki.insrt(8)
+# print(samki.to_string())
+# print(samki)
+# print("for 2 ",samki.icludes(2))
+# print("for 5 ",samki.icludes(5))
+# print("for 7 ",samki.icludes(8))
