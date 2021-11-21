@@ -12,3 +12,6 @@ space : O(1)
 
 ## Solution
 Navegate to `python/code_challenge/stack_and_queue` then open the termenal and run `poetry shell` the pytest the `stack_and_queue_pesudo
+
+# PR
+[pr](https://github.com/mohammedalsamki/data-structures-and-algorithms/pulls)
