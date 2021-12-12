@@ -5,8 +5,11 @@ from ..hash_map import HashTable
 
 def repeated_word(sentence: str) -> str:
     hash_table = HashTable()
+
+
     # region docs
     """
+
     finds the first word that occur more than once in a string
 
     Args:
