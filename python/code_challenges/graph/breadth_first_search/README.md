@@ -11,7 +11,7 @@ breadth_first_search
     - Returns data based on action sent
 
 ## Whiteboard Process
-<img src='./breadth_first_search.JPG'>
+<img src='./breadth_first_search1.JPG'>
 
 
 ## Approach & Efficiency
