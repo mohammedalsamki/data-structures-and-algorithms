@@ -1,33 +1,32 @@
-def business_trip(graph, cities: list) -> str:
-    def check_out(cost):
-        if cost:
-            return "True, ${}".format(cost)
-        return "False, $0"
+"""This module contains business_trip function"""
 
-    destinations = cities[1:]
-    position = cities[0]
-    cost = 0
-    # get neighbors of the starting position
-    neighbors = graph.get_neigbors(position)
+# from graph.graph import *
 
-    # loop neighbors cities of starting position
-    # check if any neighbor city is in destination
-    # calculate the weight of each edge as cost
-    for dest in destinations:
-        if dest in neighbors:
-            cost += neighbors[dest].weight
+def business_trip(graph, array):
+    """
+    business_trip calculates if trips between cities are possible and calculates their total cost.
+    Arguments:
+        graph: graph of available flights and their costs
+        array: an array containing destinations
+    Return: Str, the cost or None
+    """
+    try:
+        cost = 0
+        for city in range(len(array)):
+            edges = graph.get_neighbors(array[city])
 
-            # get the destination neighbor
-            next_destination = neighbors[dest].vertex.value
-            neighbors_of = graph.get_neigbors(next_destination)
+            if city + 1 <= len(array) -1:
 
-            # loop the  dest neighbors & check if any of destinations
-            # exists in the closet neighbor
-            # if exists
-            # add the weight of each edge to the cost
-            for next_neighborr in neighbors_of:
-                if next_neighborr in destinations:
-                    cost += neighbors_of[next_neighborr].weight
-        else:
-            return check_out(cost)
-    return check_out(cost)
+                cost_check = cost
+
+                for neighbor in edges:
+                    if array[city + 1] == neighbor.vertex:
+                        cost += neighbor.weight
+
+                if cost == cost_check:
+                    return None
+
+        return f'${cost}'
+
+    except:
+        raise Exception("Please check your inputs and try again.")
