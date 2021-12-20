@@ -10,7 +10,7 @@ business_trip
     - Returns cost or None
 
 ## Whiteboard Process
-<img src='./graph_business_trip.JPG'>
+<img src='./graph-business-trip.png'>
 
 
 ## Approach & Efficiency
