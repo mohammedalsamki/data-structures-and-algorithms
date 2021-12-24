@@ -1,13 +1,15 @@
 """This module contains business_trip function"""
 
-# from graph.graph import *
+from graph.graph import Graph
 
 def business_trip(graph, array):
     """
     business_trip calculates if trips between cities are possible and calculates their total cost.
+
     Arguments:
         graph: graph of available flights and their costs
         array: an array containing destinations
+
     Return: Str, the cost or None
     """
     try:

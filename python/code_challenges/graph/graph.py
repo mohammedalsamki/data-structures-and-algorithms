@@ -1,169 +1,293 @@
-class Queue:
-    def __init__(self):
-        self.dq = []
+"""This module contains Graph class"""
 
-    def enqueue(self, value):
-        self.dq.append(value)
+from graph.vertex import Vertex
+from graph.edge import Edge
+from graph.queue import Queue
+from graph.stack import Stack
 
-    def dequeue(self):
-        return self.dq.pop(0)
-
-    def __len__(self):
-        return len(self.dq)
-
-
-class Stack:
-    def __init__(self):
-        """
-        The constructor method for the stack class and it initializes the dq property to a new double ended queue instance.
-        """
-        self.dq = []
-
-    def push(self, value):
-        """
-        Store the passed value in a node and then push the node on top of the stack.
-
-        PARAMETERS
-        ----------
-                value: any
-                        The value that will get stored in a node to be pushed on top of the stack.
-        """
-        self.dq.append(value)
-
-    def pop(self):
-        """
-        Return the top node in a stack.
-        """
-        self.dq.pop()
-
-
-class Vertex:
-    """
-    Class for Adding a node to the graph
-    Arguments: value
-    Returns: The added node
-    """
-
-    def __init__(self, value):
-        """
-        Initalization for a Vertex to hold a value.
-
-        """
-        self.value = value
-
-    def __str__(self):
-        return str(self.value)
-
-    def __repr__(self):
-        return str(self.value)
-
-
-class Edge:
-    """
-    a class for Adding a new edge between two nodes in the graph
-    If specified, assigning a weight to the edge
-    Arguments: 2 nodes to be connected by the edge, weight (optional)
-    Returns: nothing
-
-    """
-
-    def __init__(self, vertex, weight):
-        self.vertex = vertex
-        self.weight = weight
-
-    def __str__(self):
-        return str(self.vertex)
-
-    def __repr__(self):
-        return str(self.vertex)
 
 
 class Graph:
+    """
+    Graph class creates Graph instances.
+
+    Arguments:None
+
+    Methods:
+
+        size
+
+            This method returns the length of the graph.
+
+            Arguments: None
+
+            Return: int
+
+
+        add_vertex
+
+            This method adds a vertex to the graph.
+
+            Arguments: vertex value
+
+            Return: vertex
+
+
+        add_edge
+
+            This method adds an edge between two graph vertices.
+
+            Arguments:
+                start_vertex: Vertex
+                end_vertex: Vertex
+                weight: int
+
+            Return: None
+
+        get_vertices
+
+            This method returns graph vertices
+
+            Arguments: None
+
+            Return: list of keys
+
+        get_neighbors
+
+            This method returns vertix neighbors
+
+            Arguments: vertex
+
+            Return: list of vertices
+
+        breadth_first_search
+
+            This method traverses a graph in breadth first order performing an action on each vertex.
+
+            Arguments:
+
+                start_vertex: Vertex
+
+                action: a function
+
+            Return: None
+
+
+        depth_first_search
+
+            This method traverses a graph in depth first order performing an action on each vertex.
+
+            Arguments:
+
+                start_vertex: Vertex
+
+                action: a function
+
+            Return: None
+    """
     def __init__(self):
-        """
-        Initalization for a hashmap to hold the vertices
-        """
-        self.__adjacency_list = {}
-        self.dfs_visited = set()
+        self.__adjacency_list = dict()
 
-    def add_node(self, value):
-        """
-        Method for Adding a node to the graph
-        Arguments: value
-        Returns: The added node
-        """
-        # new node
-        v = Vertex(value)
-        self.__adjacency_list[v] = []
-        return v
 
-    def add_edge(self, start_vertex, end_vertex, weight=0):
-        """Adds an edge to the graph"""
+    def size(self):
+        return len(self.__adjacency_list)
+
+
+    def add_vertex(self, value):
+        vertex = Vertex(value)
+        self.__adjacency_list[vertex] = []
+        return vertex
+
+
+    def add_edge(self, start_vertex, end_vertex, weight = 0):
         if start_vertex not in self.__adjacency_list:
             raise KeyError("Start Vertex not found in graph")
 
         if end_vertex not in self.__adjacency_list:
             raise KeyError("End Vertex not found in graph")
-        edge = Edge(end_vertex, weight)
+
+        edge = Edge(end_vertex , weight)
         self.__adjacency_list[start_vertex].append(edge)
 
-    def size(self):
-        return len(self.__adjacency_list)
 
-    def get_nodes(self):
-        """
-        Method to get all nodes in Graph
-        Arguments: None
-        return: All nodes
-        """
-        return self.__adjacency_list
+    def get_vertices(self):
+        return self.__adjacency_list.keys()
 
-    def get_neigbors(self, vertex):
-        """ """
-        neigbors = None
 
-        for node in self.get_nodes():
+    def get_neighbors(self, vertex):
+        return self.__adjacency_list.get(vertex, [])
 
-            if node.value == vertex:
-                neigbors = self.__adjacency_list.get(node, [])
 
-        neigbors_dict = {}
-        if neigbors:
-            for neigbor in neigbors:
-                neigbors_dict[neigbor.__str__()] = neigbor
+    def breadth_first_search(self, start_vertex):
+        try:
+            vertices= []
+            queue = Queue()
+            visited = set()
 
-        return neigbors_dict
+            queue.enqueue(start_vertex)
+            visited.add(start_vertex)
 
-    def return_nodes(self, data):
-        return data
+            while len(queue):
 
-    def breadth_first_search(self, start_vertex, action=(lambda _: None)):
-        queue = Queue()
-        visited = set()
-        nodes = list()
+                current_vertex = queue.dequeue()
 
-        queue.enqueue(start_vertex)
+                vertices +=  [current_vertex.value]
 
-        while len(queue):
-            current_vertex = queue.dequeue()
-            visited.add(current_vertex)
-            nodes.append(current_vertex)
+                neighbors = self.get_neighbors(current_vertex)
+                for edge in neighbors:
+                    neighbor = edge.vertex
 
-            neighbors = self.get_neigbors(current_vertex)
+                    if neighbor not in visited:
+                        visited.add(neighbor)
 
-            for edge in neighbors:
+                        queue.enqueue(neighbor)
 
-                neighbor = neighbors[edge].vertex
-                if neighbor not in visited:
-                    visited.add(neighbor)
-                    queue.enqueue(neighbor)
+            return vertices
 
-        return action(nodes)
+        except:
+            raise Exception("Pease check your inputs and try again.")
+
+
+    #NOTE: ALTERNATIVE TO PERFORM ACTIONS ON EACH GRAPH VERTEX
+    # def breadth_first_search(self, start_vertex, action = (lambda vertes:None)):
+
+    #     queue = Queue()
+    #     visited = set()
+
+    #     queue.enqueue(start_vertex)
+    #     visited.add(start_vertex)
+
+    #     while len(queue):
+    #         current_vertex = queue.dequeue()
+    #         action(current_vertex)
+
+    #         neighbors = self.get_neighbors(start_vertex)
+    #         for edge in neighbors:
+    #             neighbor = edge.vertex
+
+    #             if neighbor not in visited:
+    #                 visited.add(neighbor)
+    #                 queue.enqueue(neighbor)
+
 
     def depth_first_search(self, start_vertex):
-        self.dfs_visited.add(start_vertex)
 
-        for neighbour in self.get_neigbors(start_vertex):
-            if neighbour not in self.dfs_visited:
-                self.depth_first_search(neighbour)
-        return self.dfs_visited
+        try:
+            vertices= []
+            stack = Stack()
+            visited = set()
+
+            stack.push(start_vertex)
+            while len(stack):
+                current_vertex = stack.pop()
+
+                if current_vertex not in visited:
+                    visited.add(current_vertex)
+                    vertices += [current_vertex.value]
+
+                    neighbors = self.get_neighbors(current_vertex)
+
+                    for edge in neighbors:
+                        neighbor = edge.vertex
+                        if neighbor not in visited:
+                            stack.push(neighbor)
+
+            return vertices
+
+        except:
+            raise Exception("Pease check your inputs and try again.")
+
+
+    #NOTE: ALTERNATIVE TO PERFORM ACTIONS ON EACH GRAPH VERTEX
+    # def depth_first_search(self, start_vertex, action = (lambda vertes:None)):
+        # vertices= []
+        # stack = Stack()
+        # visited = set()
+
+        # stack.push(start_vertex)
+        # while len(stack):
+        #     current_vertex = stack.peek()
+
+        #     if current_vertex not in visited:
+        #         visited.add(current_vertex)
+        #         action(current_vertex)
+
+        #         neighbors = self.get_neighbors(current_vertex)
+
+        #         for edge in neighbors:
+        #             neighbor = edge.vertex
+        #             if neighbor not in visited:
+        #                 stack.push(neighbor)
+
+
+        #     else:
+        #         stack.pop()
+
+        # return vertices
+
+    def connected_vertices(self, start_vertex, end_vertix, adjacency_list):
+        try:
+
+            if end_vertix in adjacency_list[start_vertex]:
+                return True
+
+            queue = Queue()
+            visited = set()
+
+            queue.enqueue(start_vertex)
+            visited.add(start_vertex)
+
+            while len(queue):
+
+                current_vertex = queue.dequeue()
+
+                for neighbor in adjacency_list[current_vertex]:
+
+                    if neighbor is end_vertix:
+                        return True
+
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.enqueue(neighbor)
+
+            return False
+
+        except:
+            raise Exception("Pease check your inputs and try again.")
+
+
+# graph = Graph()
+
+# vertex_1 = graph.add_vertex(1)
+
+# vertex_2 = graph.add_vertex(2)
+
+# vertex_3 = graph.add_vertex(3)
+
+# vertex_4 = graph.add_vertex(4)
+
+# vertex_5 = graph.add_vertex(5)
+
+# vertex_6 = graph.add_vertex(6)
+
+# graph.add_edge(vertex_1,vertex_5)
+
+# graph.add_edge(vertex_1,vertex_2)
+
+# graph.add_edge(vertex_1,vertex_3)
+
+# graph.add_edge(vertex_5,vertex_3)
+
+# graph.add_edge(vertex_3,vertex_4)
+
+# a_l = {
+#        vertex_1:[vertex_2, vertex_3, vertex_5],
+#        vertex_2:[vertex_1],
+#        vertex_5:[vertex_1, vertex_3],
+#        vertex_3:[vertex_1,vertex_5, vertex_4],
+#        vertex_4:[vertex_3],
+#        }
+
+
+# print(graph.connected_vertices(vertex_1, vertex_4, a_l))
+# print(graph.connected_vertices(vertex_1, vertex_6, a_l))
